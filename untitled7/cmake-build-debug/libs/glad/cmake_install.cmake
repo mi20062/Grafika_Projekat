@@ -1,4 +1,4 @@
-# Install script for directory: /home/lazar/CLionProjects/untitled7/libs/glad
+# Install script for directory: /home/lazar/Grafika/Grafika_Projekat/untitled7/libs/glad
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
