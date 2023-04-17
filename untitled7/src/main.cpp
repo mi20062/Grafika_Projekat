@@ -200,6 +200,11 @@ int main() {
     tepihModel.SetShaderTextureNamePrefix("material.");
     Model ribicaModel("resources/objects/ribica/12265_Fish_v1_L2.obj");
     ribicaModel.SetShaderTextureNamePrefix("material.");
+    Model koraliModel("resources/objects/koralii/10010_Coral_v1_L3.obj");
+    koraliModel.SetShaderTextureNamePrefix("material.");
+    Model pribaModel("resources/objects/priba/13006_Blue_Tang_v1_l3.obj");
+    pribaModel.SetShaderTextureNamePrefix("material.");
+
 
 
 
@@ -264,7 +269,9 @@ int main() {
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
-    unsigned int texture1 = loadTexture(FileSystem::getPath("resources/textures/staklo.png").c_str());;
+    unsigned int texture1 = loadTexture(FileSystem::getPath("resources/textures/staklo.png").c_str());
+    //poster
+
 
     //POD
     /*float PODvertices[] = {
@@ -273,11 +280,59 @@ int main() {
             1.0f, 0.0f, -1.0f,    0.0f, 1.0f, 0.0f,    10.0f, 0.0f,
             -1.0f, 0.0f, 1.0f,    0.0f, 1.0f, 0.0f,    0.0f, 10.0f,
             -1.0f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,    0.0f, 0.0f
-    };*/
-    /*unsigned int PODindices[] = {
+    };
+    unsigned int PODindices[] = {
             0, 1, 3, // first triangle
             0, 2, 3  // second triangle
-    };*/
+    };
+    unsigned int podVBO, podVAO, podEBO;
+    glGenVertexArrays(1, &podVAO);
+    glGenBuffers(1, &podVBO);
+    glGenBuffers(1, &podEBO);
+
+    glBindVertexArray(podVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, podVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(PODvertices), PODvertices, GL_STATIC_DRAW);
+
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, podEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PODindices), PODindices, GL_STATIC_DRAW);
+
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // color attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    // texture coord attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+    glEnableVertexAttribArray(2);
+    unsigned int texture2 = loadTexture(FileSystem::getPath("resources/textures/pod.jpg").c_str());
+*/
+
+    float pVertices[] = {
+            // positions          // texture Coords
+            5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
+            -5.0f, -0.5f,  5.0f,  0.0f, 0.0f,
+            -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
+
+            5.0f, -0.5f,  5.0f,  2.0f, 0.0f,
+            -5.0f, -0.5f, -5.0f,  0.0f, 2.0f,
+            5.0f, -0.5f, -5.0f,  2.0f, 2.0f
+    };
+    unsigned int pVAO, pVBO;
+    glGenVertexArrays(1, &pVAO);
+    glGenBuffers(1, &pVBO);
+    glBindVertexArray(pVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, pVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(pVertices), &pVertices, GL_STATIC_DRAW);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+    unsigned int texture2 = loadTexture(FileSystem::getPath("resources/textures/vod.jpeg").c_str());
+
     float skyboxVertices[] = {
             // positions
             -1.0f,  1.0f, -1.0f,
@@ -322,28 +377,6 @@ int main() {
             -1.0f, -1.0f,  1.0f,
             1.0f, -1.0f,  1.0f
     };
-   /* unsigned int podVBO, podVAO, podEBO;
-    glGenVertexArrays(1, &podVAO);
-    glGenBuffers(1, &podVBO);
-    glGenBuffers(1, &podEBO);
-
-    glBindVertexArray(podVAO);*/
-
-    //glBindBuffer(GL_ARRAY_BUFFER, podVBO);
-    //glBufferData(GL_ARRAY_BUFFER, sizeof(PODvertices), PODvertices, GL_STATIC_DRAW);
-
-    //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, podEBO);
-    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(PODindices), PODindices, GL_STATIC_DRAW);
-
-    // position attribute
-   /* glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // color attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-    // texture coord attribute
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-    glEnableVertexAttribArray(2);*/
 
     //-------------
     unsigned int skyboxVAO, skyboxVBO;
@@ -408,6 +441,7 @@ int main() {
         // ------
         glClearColor(programState->clearColor.r, programState->clearColor.g, programState->clearColor.b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 
         // don't forget to enable shader before setting uniforms
         ourShader.use();
@@ -526,11 +560,12 @@ int main() {
         lampaModel.Draw(ourShader);
         //tepih
         model = glm::mat4(1.0f);
-        model = glm::translate(model,glm::vec3(0.0f, -6.8f, -3.5f));
+        model = glm::translate(model,glm::vec3(0.0f, -7.2f, -3.5f));
         model = glm::rotate(model, 80.0f, glm::vec3(1.0f, 0.0f, 0.0f));
         model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
         ourShader.setMat4("model", model);
         tepihModel.Draw(ourShader);
+
 
         //ribica1
         model = glm::mat4(1.0f);
@@ -546,21 +581,66 @@ int main() {
         model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
         ourShader.setMat4("model", model);
         ribicaModel.Draw(ourShader);
+        //ribica3
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3((float)(7.0- sin(1.0 + 2*glfwGetTime())), -5.5f, (float)(-7.0- 0.5*sin(1.0 + 12*glfwGetTime()))));
+        model = glm::rotate(model, 80.0f, glm::vec3(1.0f, 1.0f, 1.0f));
+        model = glm::scale(model, glm::vec3(0.04f, 0.04f, 0.04f));
+        ourShader.setMat4("model", model);
+        pribaModel.Draw(ourShader);
+
+        //korali
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(7.0f, -7.1f, -7.0f));
+        model = glm::rotate(model, 80.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
+        ourShader.setMat4("model", model);
+        koraliModel.Draw(ourShader);
+        //korali
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(6.3f, -7.1f, -6.3f));
+        model = glm::rotate(model, 80.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
+        ourShader.setMat4("model", model);
+        koraliModel.Draw(ourShader);
+        //korali
+        model = glm::mat4(1.0f);
+        model = glm::translate(model, glm::vec3(7.8f, -7.1f, -6.3f));
+        model = glm::rotate(model, 80.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.02f, 0.02f, 0.02f));
+        ourShader.setMat4("model", model);
+        koraliModel.Draw(ourShader);
+
+
+        glEnable(GL_CULL_FACE);
+        glCullFace(GL_FRONT);
+        glBindVertexArray(pVAO);
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture2);
+
+        model = glm::mat4(1.0f);
+        model = glm::translate(model,glm::vec3(7.0f, -4.9f, -7.4f));
+        model = glm::rotate(model, 80.1f, glm::vec3(1.0f, 0.0f, 0.0f));
+        model = glm::scale(model, glm::vec3(0.315f, -0.35f, 0.34f));
+        ourShader.setMat4("model", model);
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
 
         //cube
 
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
-        //glCullFace();
+
         // bind textures on corresponding texture units
-        glActiveTexture(GL_TEXTURE0);
+        //glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
+
 
 
         // activate shader
         cubeShader.use();
 
-        model         = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+        model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
         model = glm::translate(model,glm::vec3(7.0f, -5.7f, -3.5f));
         //model = glm::rotate(model, 80.0f, glm::vec3(1.0f, 0.0f, 0.0f));
         model = glm::scale(model, glm::vec3(3.1f, 5.1f, 2.1f));
@@ -578,34 +658,20 @@ int main() {
         // note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
         ourShader.setMat4("projection", projection);
 
+
         // render box
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
-        // bind Texture
-        //glBindTexture(GL_TEXTURE_2D, texture);
-
-        // transformacija
-        glm::mat4 m = glm::mat4(1.0f);
-        m = glm::translate(m, glm::vec3(0.0f, -7.0f, 0.0f));
-        m = glm::scale(m, glm::vec3(20.0f, 1.0f, 20.0f));
-        // render container
-        //podShader.use();
-        //ourShader.use();
-       // int locationId = glGetUniformLocation(podShader.ID,"model");
-       // glUniformMatrix4fv(locationId, 1, GL_FALSE,glm::value_ptr(m));
-        //render
-        //glBindVertexArray(podVAO);
-        //glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 
-        if (programState->ImGuiEnabled)
-            DrawImGui(programState);
+
+        /*if (programState->ImGuiEnabled)
+            DrawImGui(programState);*/
 
         // draw skybox as last
         glEnable(GL_CULL_FACE);
         glCullFace(GL_FRONT);
-        //glDepthFunc(GL_LEQUAL);  // change depth function so depth test passes when values are equal to depth buffer's content
-        //glDepthMask(GL_FALSE);
+
         glDepthFunc(GL_LEQUAL);
         skyboxShader.use();
         //view = glm::mat4(glm::mat3(programState->camera.GetViewMatrix())); // remove translation from the view matrix
@@ -629,6 +695,9 @@ int main() {
     glDeleteBuffers(1, &skyboxVAO);
     glDeleteVertexArrays(1, &cubeVAO);
     glDeleteBuffers(1, &cubeVBO);
+    glDeleteVertexArrays(1, &pVAO);
+    glDeleteBuffers(1, &pVBO);
+
     programState->SaveToFile("resources/program_state.txt");
     delete programState;
     ImGui_ImplOpenGL3_Shutdown();
